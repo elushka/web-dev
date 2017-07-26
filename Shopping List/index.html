@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" ng-app='ShoppingListApp'>
+  <head>
+    <meta charset="utf-8">
+    <script src="js/angular.min.js"></script>
+    <script src="js/app.js"></script>
+    <title>Shopping List Check Off</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <style>
+      .emptyMessage {
+        font-weight: bold;
+        color: red;
+        font-size: 1.2em;
+      }
+      li {
+        margin-bottom: 7px;
+        font-size: 1.2em;
+      }
+      li > button {
+        margin-left: 6px;
+      }
+      button > span {
+        color: green;
+      }
+    </style>
+  </head>
+<body>
+  <div ng-controller='ShoppingListController'>
+  <div class="container">
+  <h1 style="text-align:center">Shopping List Check Off</h1>
+
+  <div class="row">
+
+    <!-- To Buy List -->
+    <div class="col-md-6">
+     <h2 style="text-align:left">To Buy:</h2>
+     <ul>
+       <li ng-repeat="item in shoppingList">Buy {{item.quantity}} {{item.name}}(s)
+         <button ng-click="addToBought();"><span class="glyphicon glyphicon-ok"></span> Bought</button>
+         <button ng-click="removeFromList();"><span class="glyphicon glyphicon-remove"></span> Remove</button>
+       </li>
+     </ul>
+     <div ng-if="shoppingList.length=="0"" class="emptyMessage">Everything is bought!</div>
+     <div>
+       <input type="text" ng-model="newItemName" placeholder="Item name...">
+       <input type="text" ng-model="newItemQuantity" placeholder="Quantity...">
+       <button ng-click="addToList();">Add New Item</button>
+      </div>
+    </div>
+
+    <!-- Already Bought List -->
+    <div class="col-md-6">
+     <h2 style="text-align:right">Already Bought:</h2>
+     <ul>
+       <li ng-repeat="item in boughtList">Bought {{item.quantity}} {{item.name}}(s)
+       </li>
+     </ul>
+     <div ng-if="boughtList.length=="0"" class="emptyMessage">Nothing bought yet.</div>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>
