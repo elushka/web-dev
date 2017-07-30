@@ -1,66 +1,92 @@
 (function () {
 'use strict';
 
-var shoppingList = [
-  {
-    name: "Milk",
-    quantity: "2"
-  },
-  {
-    name: "Donuts",
-    quantity: "200"
-  },
-  {
-    name: "Cookies",
-    quantity: "300"
-  },
-  {
-    name: "Chocolate",
-    quantity: "5"
-  },
-  {
-    name: "Bread",
-    quantity: '1'
-  }
-];
+angular.module('ShoppingListCheckOff', [])
+.controller('ToBuyController', ToBuyController)
+.controller('AlreadyBoughtController', AlreadyBoughtController)
+.service('ShoppingListCheckOffService', ShoppingListCheckOffService);
 
-var boughtList = [ ];
+ToBuyController.$inject = ['ShoppingListCheckOffService'];
+function ToBuyController(ShoppingListCheckOffService) {
+    var toBuyItem =  this;
 
-angular.module('ShoppingListApp', [])
-.controller('ShoppingListController', ShoppingListController);
+    toBuyItem.items = ShoppingListCheckOffService.getShoppingItems();
 
-ShoppingListController.$inject = ['$scope'];
-function ShoppingListController($scope) {
-  $scope.shoppingList = shoppingList;
-  $scope.boughtList = boughtList;
+    toBuyItem.purchaseItem = function (itemIndex) {
+        ShoppingListCheckOffService.purchaseItem(itemIndex);
+    }
 
-  $scope.addToBought = function () {
-    var newItem = {
-      name: $scope.newItemName,
-      quantity: $scope.newItemQuantity
-    };
+    toBuyItem.removeItem = function(itemIndex) {
+      ShoppingListCheckOffService.removeItem(itemIndex);
+    }
 
-    $scope.shoppingList.push(newItem);
+    toBuyItem.addItem = function(itemName, quantity) {
+      ShoppingListCheckOffService.addItem(itemName, quantity);
+    }
+
+}
+
+AlreadyBoughtController.$inject = ['ShoppingListCheckOffService'];
+function AlreadyBoughtController(ShoppingListCheckOffService) {
+    var boughtItem =  this;
+
+    boughtItem.items = ShoppingListCheckOffService.getBoughtItems();
+
+}
+
+function ShoppingListCheckOffService() {
+    var service = this;
+
+    var shoppingList = [
+      {
+        name: "bottle of milk",
+        quantity: "1"
+      },
+      {
+        name: "donuts",
+        quantity: "200"
+      },
+      {
+        name: "cookies",
+        quantity: "300"
+      },
+      {
+        name: "chocolates",
+        quantity: "5"
+      },
+      {
+        name: "bread",
+        quantity: '1'
+      }
+    ];
+
+  var boughtList = [];
+
+  service.getShoppingItems = function () {
+    return shoppingList;
   };
 
-  $scope.addToList = function () {
-    var newItem = {
-      name: $scope.newItemName,
-      quantity: $scope.newItemQuantity
-    };
-
-    $scope.shoppingList.push(newItem);
+  service.getBoughtItems = function () {
+    return boughtList;
   };
 
-  $scope.removeFromList = function () {
-    var newItem = {
-      name: $scope.newItemName,
-      quantity: $scope.newItemQuantity
-    };
-
-    $scope.shoppingList.push(newItem);
+  service.purchaseItem = function (itemIndex) {
+    boughtList.push(shoppingList[itemIndex]);
+    shoppingList.splice(itemIndex, 1);
   };
 
-  }
+  service.removeItem = function (itemIndex) {
+    shoppingList.splice(itemIndex, 1);
+  };
+
+  service.addItem = function (itemName, quantity) {
+  var item = {
+    name: itemName,
+    quantity: quantity
+  };
+  shoppingList.push(item);
+  };
+
+}
 
 })();
