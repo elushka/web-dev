@@ -1,0 +1,47 @@
+body {
+  font-size: 1.2em;
+}
+
+div.tabs > a, div.tabs > button {
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
+div.tabs {
+  margin-bottom: 10px;
+}
+
+.activeTab {
+  font-weight: bold;
+}
+#main{
+    display:-webkit-box;
+    height:relative;
+    width:relative;
+    -webkit-box-orient:vertical;
+    -webkit-box-pack: top;
+      -webkit-box-align: center;
+    background:#F67256;
+    font-size: 14pt;
+}
+img {
+    display: block;
+    margin: auto;
+    width: 40%;
+}
+li  {
+ float:left;
+ font-size: 12pt;
+ font: Frutiger;
+ width:150px;
+ height:90px;
+ padding-top: 2%;
+ background:gold;
+ border-left: 3px solid black;
+ border-top: 3px solid red;
+ border-right: 3px solid red;
+ border-bottom: 3px solid black;
+ text-align: center;
+ vertical-align: middle;
+ display: table-cell;
+}
