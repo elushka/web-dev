@@ -193,3 +193,7 @@ color:white;
     content: ' *';
     display:inline;
 }
+form {
+    width: 300px;
+    margin: 0 auto;
+}
